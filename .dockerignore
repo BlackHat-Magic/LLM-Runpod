@@ -1,0 +1,9 @@
+.dockerignore
+Dockerfile
+README.md
+LICENSE.md
+.git
+.gitignore
+env/
+.env.example
+test.py
