@@ -1,9 +1,9 @@
+env/
 .dockerignore
-Dockerfile
-README.md
-LICENSE.md
+.env.example
 .git
 .gitignore
-env/
-.env.example
+Dockerfile
+LICENSE.md
+README.md
 test.py
