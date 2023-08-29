@@ -1,24 +1,13 @@
 from dotenv import load_dotenv
-from transformers import AutoConfig, AutoTokenizer, AutoModelForCausalLM
-import runpod, os, argparse
+from ctransformers import AutoModelForCausalLM
+import runpod, os
 
 load_dotenv()
-
-tokenizer = AutoTokenizer.from_pretrained(
-    os.getenv("MODEL_ID"),
-    use_fast=True
-)
-
-config = AutoConfig.from_pretrained(
-    os.getenv("MODEL_ID"), 
-    trust_remote_code=True
-)
-config.max_position_embeddings = int(os.getenv("MAX_TOKEN_LENGTH"))
+MODEL_ID = os.getenv("MODEL_ID")
 
 model = AutoModelForCausalLM.from_pretrained(
     os.getenv("MODEL_ID"),
-    trust_remote_code=True,
-    device_map="auto"
+    model_type="llama"
 )
 
 def generate_text(job):
@@ -32,7 +21,7 @@ def generate_text(job):
         elif(message["role"] == "user"):
             prompt += f"USER: {message['content']}\n"
         else:
-            prompt += f"SYSTEM: {message['content']}\n"
+            prompt += f"{message['content']}\n"
         input_ids = tokenizer(
             prompt,
             return_tensores="pt"
