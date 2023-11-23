@@ -7,7 +7,7 @@ ARG MODEL_ID
 ARG DEFAULT_TEMPERATURE
 
 RUN apt-get update && \
-    apt-get install -y libgl-mesa-glx libgl2.0 && \
+    apt-get install -y libgl1-mesa-glx libglib2.0-0 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists
 
@@ -15,10 +15,10 @@ WORKDIR /app
 
 ADD ./.env .
 
-COPY ./requirements.txt .
+ADD ./requirements.txt .
 
-COPY ./RunLLM.py .
+ADD ./src/RunLLM.py .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-CMD [ "python", "-u", "Manticore-Pygmalion-Guanaco-SuperHOT.py" ]
+CMD [ "python", "-u", "RunLLM.py" ]
