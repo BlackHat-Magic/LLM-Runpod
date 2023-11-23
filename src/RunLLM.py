@@ -1,4 +1,5 @@
 from dotenv import load_dotenv
+from transformers import AutoModelForCausalLM, AutoTokenizer
 import runpod, os
 
 load_dotenv()
@@ -10,6 +11,11 @@ model = AutoModelForCausalLM.from_pretrained(
     MODEL_ID,
     cache_dir=CACHE_DIR,
     device_map="auto",
+    trust_remote_code=True
+)
+tokenizer = AutoTokenizer.from_pretrained(
+    MODEL_ID,
+    cache_dir=CACHE_DIR,
     trust_remote_code=True
 )
 
