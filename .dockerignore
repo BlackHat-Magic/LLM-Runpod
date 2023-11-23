@@ -3,7 +3,5 @@ env/
 .env.example
 .git
 .gitignore
-Dockerfile
 LICENSE.md
 README.md
-test.py

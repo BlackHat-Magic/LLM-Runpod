@@ -1,13 +1,16 @@
 from dotenv import load_dotenv
-from ctransformers import AutoModelForCausalLM
 import runpod, os
 
 load_dotenv()
 MODEL_ID = os.getenv("MODEL_ID")
+CACHE_DIR = os.getenv("CACHE_DIR")
+DEFAULT_TEMPERATURE = float(os.getenv("DEFAULT_TEMPERATURE"))
 
 model = AutoModelForCausalLM.from_pretrained(
-    os.getenv("MODEL_ID"),
-    model_type="llama"
+    MODEL_ID,
+    cache_dir=CACHE_DIR,
+    device_map="auto",
+    trust_remote_code=True
 )
 
 def generate_text(job):
@@ -42,7 +45,7 @@ def generate_text(job):
 
     output = mode.generate(
         inputs=input_ids, 
-        temperature=job_input.get("temperature", float(os.getenv("DEFAULT_TEMPERATURE"))),
+        temperature=job_input.get("temperature", DEFAULT_TEMPERATURE),
         max_new_tokens=job_input.get(
             "max_response_length", 
             (config.max_position_embeddings - len(input_ids))
