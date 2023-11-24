@@ -63,6 +63,7 @@ def generate_text(job):
         ),
     )
 
-    return(tokenizer.decode(output[0]))
+    # return(tokenizer.decode(output[0]))
+    return(prompt)
 
 runpod.serverless.start({"handler": generate_text})
