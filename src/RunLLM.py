@@ -19,7 +19,6 @@ tokenizer = AutoTokenizer.from_pretrained(
     cache_dir=CACHE_DIR,
     trust_remote_code=True
 )
-config = 
 
 def generate_text(job):
     job_input = job["input"]
