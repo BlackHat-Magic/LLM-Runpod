@@ -40,16 +40,16 @@ def generate_text(job):
         messages.pop(1)
         for message in messages:
             if(message["role"] == "assistant"):
-                prompt += f"ASSISTANT: {message['content']}\n"
+                prompt += f"ASSISTANT: {message['content']}\n\n"
             elif(message["role"] == "user"):
-                prompt += f"USER: {message['content']}\n"
+                prompt += f"USER: {message['content']}\n\n"
             else:
-                prompt += f"SYSTEM: {message['content']}\n"
+                prompt += f"SYSTEM: {message['content']}\n\n"
         input_ids = tokenizer(
             prompt,
             return_tensors="pt"
         ).input_ids.cuda()
-    prompt += "\nASSISTANT: "
+    prompt += "ASSISTANT: "
     input_ids = tokenizer(prompt, return_tensors="pt").input_ids.cuda()
 
     output = model.generate(
