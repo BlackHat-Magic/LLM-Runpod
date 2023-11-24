@@ -47,7 +47,7 @@ def generate_text(job):
                 prompt += f"SYSTEM: {message['content']}\n"
         input_ids = tokenizer(
             prompt,
-            return_tensores="pt"
+            return_tensors="pt"
         ).input_ids.cuda()
 
     output = mode.generate(
