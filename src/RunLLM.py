@@ -55,7 +55,7 @@ def generate_text(job):
         temperature=job_input.get("temperature", DEFAULT_TEMPERATURE),
         max_new_tokens=job_input.get(
             "max_response_length", 
-            (config.max_position_embeddings - len(input_ids))
+            (MAX_TOKEN_LENGTH - len(input_ids))
         ),
     )
 
