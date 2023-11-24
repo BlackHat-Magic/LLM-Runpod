@@ -50,7 +50,7 @@ def generate_text(job):
             return_tensors="pt"
         ).input_ids.cuda()
 
-    output = mode.generate(
+    output = model.generate(
         inputs=input_ids, 
         temperature=job_input.get("temperature", DEFAULT_TEMPERATURE),
         max_new_tokens=job_input.get(
