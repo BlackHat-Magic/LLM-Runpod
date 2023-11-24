@@ -6,6 +6,7 @@ load_dotenv()
 MODEL_ID = os.getenv("MODEL_ID")
 CACHE_DIR = os.getenv("CACHE_DIR")
 DEFAULT_TEMPERATURE = float(os.getenv("DEFAULT_TEMPERATURE"))
+MAX_TOKEN_LENGTH = int(os.getenv("MAX_TOKEN_LENGTH"))
 
 model = AutoModelForCausalLM.from_pretrained(
     MODEL_ID,
@@ -18,6 +19,7 @@ tokenizer = AutoTokenizer.from_pretrained(
     cache_dir=CACHE_DIR,
     trust_remote_code=True
 )
+config = 
 
 def generate_text(job):
     job_input = job["input"]
@@ -35,7 +37,7 @@ def generate_text(job):
             prompt,
             return_tensors="pt"
         ).input_ids.cuda()
-    while len(input_ids > 0.75 * config.max_position_embeddings):
+    while len(input_ids > 0.75 * MAX_TOKEN_LENGTH):
         messages.pop(1)
         for message in messages:
             if(message["role"] == "assistant"):
