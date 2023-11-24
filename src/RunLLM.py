@@ -33,7 +33,7 @@ def generate_text(job):
             prompt += f"{message['content']}\n"
         input_ids = tokenizer(
             prompt,
-            return_tensores="pt"
+            return_tensors="pt"
         ).input_ids.cuda()
     while len(input_ids > 0.75 * config.max_position_embeddings):
         messages.pop(1)
