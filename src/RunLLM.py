@@ -36,7 +36,7 @@ def generate_text(job):
             prompt,
             return_tensors="pt"
         ).input_ids.cuda()
-    while len(input_ids > 0.75 * MAX_TOKEN_LENGTH):
+    while len(input_ids) > 0.75 * MAX_TOKEN_LENGTH:
         messages.pop(1)
         for message in messages:
             if(message["role"] == "assistant"):
