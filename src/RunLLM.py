@@ -45,23 +45,22 @@ def generate_text(job):
                 prompt += f"USER: {message['content']}\n"
             else:
                 prompt += f"SYSTEM: {message['content']}\n"
-        prompt += "\nASSISTANT: "
-        print(prompt)
-        print
         input_ids = tokenizer(
             prompt,
             return_tensors="pt"
         ).input_ids.cuda()
+    prompt += "\nASSISTANT: "
+    input_ids = tokenizer(prompt, return_tensors="pt").input_ids.cuda()
 
-    output = model.generate(
-        inputs=input_ids, 
-        # temperature=job_input.get("temperature", DEFAULT_TEMPERATURE),
-        # do_sample=True,
-        max_new_tokens=job_input.get(
-            "max_response_length", 
-            (MAX_TOKEN_LENGTH - len(input_ids))
-        ),
-    )
+    # output = model.generate(
+    #     inputs=input_ids, 
+    #     # temperature=job_input.get("temperature", DEFAULT_TEMPERATURE),
+    #     # do_sample=True,
+    #     max_new_tokens=job_input.get(
+    #         "max_response_length", 
+    #         (MAX_TOKEN_LENGTH - len(input_ids))
+    #     ),
+    # )
 
     # return(tokenizer.decode(output[0]))
     return(prompt)
