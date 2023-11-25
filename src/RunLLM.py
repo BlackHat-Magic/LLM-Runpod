@@ -52,14 +52,17 @@ def generate_text(job):
     prompt += "ASSISTANT: "
     input_ids = tokenizer(prompt, return_tensors="pt").input_ids.cuda()
 
+    latest_message_tokens = tokenizer(messages[-1]["content"], return_tensors="pt")
+    tokens_left = MAX_TOKEN_LENGTH - len(input_ids)
+    max_new_tokens = min(tokens_left, latest_message_tokens)
+    if(job_input.get("max_response_length", False)):
+        max_new_tokens = min(job_input["max_response_length"], tokens_left)
+
     output = model.generate(
         inputs=input_ids, 
         temperature=job_input.get("temperature", DEFAULT_TEMPERATURE),
         do_sample=True,
-        max_new_tokens=job_input.get(
-            "max_response_length", 
-            (MAX_TOKEN_LENGTH - len(input_ids))
-        ),
+        max_new_tokens=max_new_tokens,
     )
 
     return(tokenizer.decode(output[0]))
