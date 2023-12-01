@@ -10,9 +10,6 @@ CACHE_DIR = os.getenv("CACHE_DIR")
 DEFAULT_TEMPERATURE = float(os.getenv("DEFAULT_TEMPERATURE"))
 MAX_TOKEN_LENGTH = int(os.getenv("MAX_TOKEN_LENGTH"))
 
-if(not torch.cuda.is_available()):
-    return
-
 num_gpus = torch.cuda.device_count()
 
 # model = AutoModelForCausalLM.from_pretrained(
