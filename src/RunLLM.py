@@ -50,6 +50,7 @@ def generate_text(job):
     if(job_input.get("max_response_length", False)):
         max_new_tokens = min(job_input["max_response_length"], tokens_left)
 
+    temperature = DEFAULT_TEMPERATURE
     if(job_input.get("temperature", False)):
         temperature = job_input.get("temperature")
     
