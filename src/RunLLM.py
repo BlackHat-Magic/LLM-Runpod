@@ -48,7 +48,7 @@ def generate_text(job):
     latest_message_tokens = tokenizer(messages[-1]["content"], return_tensors="pt")
     max_new_tokens = MAX_TOKEN_LENGTH - len(input_ids)
     if(job_input.get("max_response_length", False)):
-        max_new_tokens = min(job_input["max_response_length"], tokens_left)
+        max_new_tokens = min(job_input["max_response_length"], max_new_tokens)
 
     temperature = DEFAULT_TEMPERATURE
     if(job_input.get("temperature", False)):
