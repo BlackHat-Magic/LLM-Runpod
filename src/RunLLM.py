@@ -2,13 +2,18 @@ from dotenv import load_dotenv
 # from transformers import AutoModelForCausalLM, AutoTokenizer
 from transformers import AutoTokenizer
 from vllm import LLM, SamplingParams
-import runpod, os
+import runpod, os, torch
 
 load_dotenv()
 MODEL_ID = os.getenv("MODEL_ID")
 CACHE_DIR = os.getenv("CACHE_DIR")
 DEFAULT_TEMPERATURE = float(os.getenv("DEFAULT_TEMPERATURE"))
 MAX_TOKEN_LENGTH = int(os.getenv("MAX_TOKEN_LENGTH"))
+
+if(not torch.cuda.is_available()):
+    return
+
+num_gpus = torch.cuda.device_count()
 
 # model = AutoModelForCausalLM.from_pretrained(
 #     MODEL_ID,
@@ -25,7 +30,8 @@ tokenizer = AutoTokenizer.from_pretrained(
 model = LLM(
     model=MODEL_ID,
     download_dir=CACHE_DIR,
-    trust_remote_code=True
+    trust_remote_code=True,
+    tensor_parallel_size=num_gpus
 )
 
 def generate_text(job):
